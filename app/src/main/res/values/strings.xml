@@ -1,0 +1,5 @@
+<resources>
+	<string name="app_name">notepad</string>
+	<string name="app_name_title">Notepad</string>
+	<string name="action_settings">Settings</string>
+</resources>
