@@ -1,4 +1,4 @@
-package bvelidi.notepad.views
+package bvelidi.notepad.views.home
 
 import android.content.Context
 import android.os.Bundle

@@ -10,7 +10,7 @@ import bvelidi.notepad.R
 /**
  * A placeholder fragment containing a simple view.
  */
-class HomeActivityFragment : Fragment() {
+class ZeroNotesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
