@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import bvelidi.notepad.model.Notes
-import bvelidi.notepad.views.NotesListFragment.OnListFragmentInteractionListener
+import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionListener
 
 /**
  * [RecyclerView.Adapter] that can display a Notes and makes a call to the

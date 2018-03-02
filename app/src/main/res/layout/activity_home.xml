@@ -22,7 +22,7 @@
 	</android.support.design.widget.AppBarLayout>
 
 	<fragment android:id="@+id/zeroStateFragment"
-			  android:name="bvelidi.notepad.views.home.HomeActivityFragment"
+			  android:name="bvelidi.notepad.views.home.ZeroNotesFragment"
 			  xmlns:android="http://schemas.android.com/apk/res/android"
 			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  xmlns:tools="http://schemas.android.com/tools"
@@ -32,7 +32,7 @@
 			  tools:layout="@layout/fragment_zero_notes"/>
 
 	<fragment android:id="@+id/listFragment"
-			  android:name="bvelidi.notepad.views.NotesListFragment"
+			  android:name="bvelidi.notepad.views.home.NotesListFragment"
 			  xmlns:android="http://schemas.android.com/apk/res/android"
 			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  xmlns:tools="http://schemas.android.com/tools"

@@ -1,5 +1,6 @@
 package bvelidi.notepad.views.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -8,14 +9,21 @@ import android.view.MenuItem
 import android.view.View
 import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
-import bvelidi.notepad.views.NotesListFragment
+import bvelidi.notepad.views.notes.NotesDetailActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentInteractionListener {
 
+    val kResultCodeSaveNotes = 1
+
     override fun onListFragmentInteraction(item: Notes) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(this, NotesDetailActivity::class.java).apply {
+            putExtra("text", item.text)
+            putExtra("id", item.id)
+        }
+        startActivityForResult(intent, kResultCodeSaveNotes)
     }
+
 
     val zero_state = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +39,10 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
     }
 
     fun initView() {
-        if(zero_state) {
-            findViewById<View>(R.id.listFragment).visibility=View.GONE
+        if (zero_state) {
+            findViewById<View>(R.id.listFragment).visibility = View.GONE
         } else {
-            findViewById<View>(R.id.zeroStateFragment).visibility=View.GONE
+            findViewById<View>(R.id.zeroStateFragment).visibility = View.GONE
         }
     }
 
@@ -51,6 +59,16 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            kResultCodeSaveNotes -> {
+                val id = data?.getIntExtra("id", -1)
+                val text = data?.getStringExtra("text")
+                System.out.println("Saving to db: " + id + " " + text)
+            }
         }
     }
 }
