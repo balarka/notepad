@@ -3,14 +3,18 @@ package bvelidi.notepad.views.home
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import bvelidi.notepad.NotepadApp
 import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
+import bvelidi.notepad.model.notes.NotesRepository
 import bvelidi.notepad.views.notes.NotesDetailActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 
 class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentInteractionListener {
 
@@ -18,7 +22,7 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
 
     override fun onListFragmentInteraction(item: Notes) {
         val intent = Intent(this, NotesDetailActivity::class.java).apply {
-            putExtra("text", item.text)
+            putExtra("text", item.content)
             putExtra("id", item.id)
         }
         startActivityForResult(intent, kResultCodeSaveNotes)
@@ -66,8 +70,15 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         when (requestCode) {
             kResultCodeSaveNotes -> {
                 val id = data?.getIntExtra("id", -1)
-                val text = data?.getStringExtra("text")
-                System.out.println("Saving to db: " + id + " " + text)
+                val content = data?.getStringExtra("content")
+                val title = data?.getStringExtra("title")
+
+
+                val tk = NotepadApp.database?.notesDao()?.getNotesForId(id!!)
+                val updateNotes = Notes(id!!, title!!, content!!, tk?.date_created!!, Date().time.toString())
+
+                NotesRepository.updateNotes(updateNotes)
+                System.out.println("updated db note")
             }
         }
     }

@@ -29,8 +29,10 @@ class NotesDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
             android.R.id.home -> {
-                val intent = Intent().putExtra("text", editText.text.toString())
+                val intent = Intent()
                         .putExtra("id", id)
+                        .putExtra("title", titleText.text.toString())
+                        .putExtra("content", editText.text.toString())
                 setResult(1, intent)
                 finish()
             }

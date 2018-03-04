@@ -13,7 +13,7 @@ import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionLis
  * specified [OnListFragmentInteractionListener].
  *
  */
-class NotePadItemRecyclerViewAdapter(private val mValues: List<Notes>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<NotePadItemRecyclerViewAdapter.ViewHolder>() {
+class NotePadItemRecyclerViewAdapter(private var mValues: List<Notes>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<NotePadItemRecyclerViewAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,11 +22,14 @@ class NotePadItemRecyclerViewAdapter(private val mValues: List<Notes>, private v
         return ViewHolder(view)
     }
 
+    fun setList(listItems: List<Notes>)  {
+        mValues = listItems
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
         holder.mIdView.text = mValues[position].id.toString()
-        holder.mContentView.text = mValues[position].text
+        holder.mContentView.text = mValues[position].content
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem as Notes)
