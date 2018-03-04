@@ -72,8 +72,7 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
                 val id = data?.getIntExtra("id", -1)
                 val content = data?.getStringExtra("content")
                 val title = data?.getStringExtra("title")
-
-
+                
                 val tk = NotepadApp.database?.notesDao()?.getNotesForId(id!!)
                 val updateNotes = Notes(id!!, title!!, content!!, tk?.date_created!!, Date().time.toString())
 
