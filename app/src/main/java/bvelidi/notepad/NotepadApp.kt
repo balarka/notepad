@@ -20,6 +20,7 @@ class NotepadApp: Application() {
         if(NotepadApp.database == null) {
             NotepadApp.database = Room.databaseBuilder(this, AppDatabase::class.java, "notes-db")
                     .allowMainThreadQueries().build()
+            // TODO: Initialize Db only for testing purposes, remove it in prod
             initDB()
         }
     }
