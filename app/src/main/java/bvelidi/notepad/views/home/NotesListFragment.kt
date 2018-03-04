@@ -10,8 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import bvelidi.notepad.NotePadItemRecyclerViewAdapter
+import bvelidi.notepad.NotepadApp
 import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
+import bvelidi.notepad.model.notes.NotesRepository
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +30,7 @@ class NotesListFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+    private var adapter: NotePadItemRecyclerViewAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +57,24 @@ class NotesListFragment : Fragment() {
 
             val tk = arrayListOf<Notes>()
 
-            for (i in 1..50) {
-                tk.add(Notes(i, i.toString() + " item", ""))
+            NotepadApp.database?.notesDao()?.getAll()?.forEach { ne ->
+                tk.add(Notes(ne.id!!, ne.title.toString(), ne.content.toString() + " item", ne.date_created!!, ne.date_modified!!))
             }
 
-            view.adapter = NotePadItemRecyclerViewAdapter(tk, mListener)
+            adapter = NotePadItemRecyclerViewAdapter(tk, mListener)
+            view.adapter = adapter
         }
         return view
+    }
+
+    fun refreshView() {
+        loadNotes()
+        adapter?.notifyDataSetChanged()
+    }
+
+    private fun loadNotes() {
+        val newList = NotesRepository.getAllNotes()
+        adapter?.setList(newList)
     }
 
 
@@ -73,6 +87,10 @@ class NotesListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        refreshView()
+        super.onResume()
+    }
 
     override fun onDetach() {
         super.onDetach()

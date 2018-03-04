@@ -5,4 +5,4 @@ package bvelidi.notepad.model
  * Data class for Notes model
  *
  */
-data class Notes(val id: Int, val text: String, val date: String)
+data class Notes(val id: Int, val title: String, val content: String, val dateCreated: String, val dateModified: String)
