@@ -17,7 +17,9 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentInteractionListener {
 
-    val kResultCodeSaveNotes = 1
+    private val kResultCodeSaveNotes = 1
+    private val zero_state = false
+
 
     override fun onListFragmentInteraction(item: Notes) {
         val intent = Intent(this, NotesDetailActivity::class.java).apply {
@@ -27,8 +29,6 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         startActivityForResult(intent, kResultCodeSaveNotes)
     }
 
-
-    val zero_state = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
