@@ -3,7 +3,6 @@ package bvelidi.notepad.views.home
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -72,7 +71,7 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
                 val id = data?.getIntExtra("id", -1)
                 val content = data?.getStringExtra("content")
                 val title = data?.getStringExtra("title")
-                
+
                 val tk = NotepadApp.database?.notesDao()?.getNotesForId(id!!)
                 val updateNotes = Notes(id!!, title!!, content!!, tk?.date_created!!, Date().time.toString())
 

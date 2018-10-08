@@ -36,15 +36,13 @@ class NotesListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
-        }
+        mColumnCount = arguments?.getInt(ARG_COLUMN_COUNT) ?: 1
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_notepaditem_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_notepaditem_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
