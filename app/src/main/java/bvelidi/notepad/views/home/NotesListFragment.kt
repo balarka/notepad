@@ -3,6 +3,8 @@ package bvelidi.notepad.views.home
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.DividerItemDecoration.HORIZONTAL
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,6 +16,7 @@ import bvelidi.notepad.NotepadApp
 import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
 import bvelidi.notepad.model.notes.NotesRepository
+import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionListener
 
 /**
  * A fragment representing a list of Items.
@@ -22,10 +25,7 @@ import bvelidi.notepad.model.notes.NotesRepository
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
+
 class NotesListFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
@@ -61,6 +61,7 @@ class NotesListFragment : Fragment() {
 
             adapter = NotePadItemRecyclerViewAdapter(tk, mListener)
             view.adapter = adapter
+            view.setHasFixedSize(true)
         }
         return view
     }

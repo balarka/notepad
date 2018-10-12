@@ -23,9 +23,6 @@
 
 	<fragment android:id="@+id/zeroStateFragment"
 			  android:name="bvelidi.notepad.views.home.ZeroNotesFragment"
-			  xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
-			  xmlns:tools="http://schemas.android.com/tools"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -33,9 +30,6 @@
 
 	<fragment android:id="@+id/listFragment"
 			  android:name="bvelidi.notepad.views.home.NotesListFragment"
-			  xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
-			  xmlns:tools="http://schemas.android.com/tools"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  app:layout_behavior="@string/appbar_scrolling_view_behavior"
