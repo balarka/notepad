@@ -2,7 +2,6 @@ package bvelidi.notepad.views.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -18,12 +17,12 @@ import java.util.*
 class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentInteractionListener {
 
     private val kResultCodeSaveNotes = 1
-    private val zero_state = false
-
+    private val zeroState = false
 
     override fun onListFragmentInteraction(item: Notes) {
         val intent = Intent(this, NotesDetailActivity::class.java).apply {
-            putExtra("text", item.content)
+            putExtra("titleText", item.title)
+            putExtra("contentText", item.content)
             putExtra("id", item.id)
         }
         startActivityForResult(intent, kResultCodeSaveNotes)
@@ -36,13 +35,13 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         initView()
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val intent = Intent(this, NotesDetailActivity::class.java)
+            startActivityForResult(intent, kResultCodeSaveNotes)
         }
     }
 
     fun initView() {
-        if (zero_state) {
+        if (zeroState) {
             findViewById<View>(R.id.listFragment).visibility = View.GONE
         } else {
             findViewById<View>(R.id.zeroStateFragment).visibility = View.GONE
@@ -68,15 +67,11 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             kResultCodeSaveNotes -> {
-                val id = data?.getIntExtra("id", -1)
-                val content = data?.getStringExtra("content")
-                val title = data?.getStringExtra("title")
-
-                val tk = NotepadApp.database?.notesDao()?.getNotesForId(id!!)
-                val updateNotes = Notes(id!!, title!!, content!!, tk?.date_created!!, Date().time.toString())
-
-                NotesRepository.updateNotes(updateNotes)
-                System.out.println("updated db note")
+                val updated = data?.getBooleanExtra("updated", false) ?: false
+                if (updated) {
+                    val fragment = supportFragmentManager.findFragmentById(R.id.listFragment) as NotesListFragment
+                    fragment.refreshView()
+                }
             }
         }
     }

@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.TextView
+import bvelidi.notepad.NotepadApp
 import bvelidi.notepad.R
+import bvelidi.notepad.db.NotesEntity
 import kotlinx.android.synthetic.main.activity_notes_detail.*
+import java.util.*
 
 
 class NotesDetailActivity : AppCompatActivity() {
@@ -15,24 +18,40 @@ class NotesDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes_detail)
-        setTitle(R.string.edit_notes)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val text = intent.getStringExtra("text")
-        id = intent.getIntExtra("id", -1)
+        val title = if (intent.hasExtra("titleText")) {
+            intent.getStringExtra("titleText")
+        } else {
+            resources.getString(R.string.new_note_title)
+        }
 
-        editText.setText(text, TextView.BufferType.EDITABLE)
+        titleText.setText(title)
+
+        id = intent.getIntExtra("id", -1)
+        val content = if (intent.hasExtra("contentText")) {
+            intent.getStringExtra("contentText")
+        } else {
+            resources.getString(R.string.empty_note_zero_text)
+        }
+
+        contentText.setText(content)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
             android.R.id.home -> {
+                if (id == -1) {
+                    val date_created_modified = Date().time.toString()
+                    NotepadApp.database.notesDao().insert(NotesEntity(titleText.text.toString(), contentText.text.toString(), date_created_modified, date_created_modified))
+                } else {
+                    val date_created = NotepadApp.database.notesDao().getNotesForId(id).date_created
+                    NotepadApp.database.notesDao().update(id, titleText.text.toString(), contentText.text.toString(), date_created, Date().time.toString())
+                }
                 val intent = Intent()
-                        .putExtra("id", id)
-                        .putExtra("title", titleText.text.toString())
-                        .putExtra("content", editText.text.toString())
+                        .putExtra("updated", true)
                 setResult(1, intent)
                 finish()
             }

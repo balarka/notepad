@@ -21,59 +21,39 @@ import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionLis
 /**
  * A fragment representing a list of Items.
  *
- *
  * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
  * interface.
  */
 
 class NotesListFragment : Fragment() {
-    // TODO: Customize parameters
-    private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
-    private var adapter: NotePadItemRecyclerViewAdapter? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        mColumnCount = arguments?.getInt(ARG_COLUMN_COUNT) ?: 1
-    }
-
+    private lateinit var adapter: NotePadItemRecyclerViewAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notepaditem_list, container, false)
+        val allNotes = arrayListOf<Notes>()
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            if (mColumnCount <= 1) {
-                view.layoutManager = LinearLayoutManager(context)
-            } else {
-                view.layoutManager = GridLayoutManager(context, mColumnCount)
+        NotepadApp.database.notesDao().getAll().forEach { ne ->
+            with(ne) {
+                allNotes.add(Notes(id, title, content + " item", date_created, date_modified))
             }
-
-            val tk = arrayListOf<Notes>()
-
-            NotepadApp.database?.notesDao()?.getAll()?.forEach { ne ->
-                tk.add(Notes(ne.id!!, ne.title.toString(), ne.content.toString() + " item", ne.date_created!!, ne.date_modified!!))
-            }
-
-            adapter = NotePadItemRecyclerViewAdapter(tk, mListener)
-            view.adapter = adapter
-            view.setHasFixedSize(true)
         }
+
+        adapter = NotePadItemRecyclerViewAdapter(allNotes, mListener)
+        (view as RecyclerView).adapter = adapter
+        view.setHasFixedSize(true)
         return view
     }
 
     fun refreshView() {
         loadNotes()
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
     private fun loadNotes() {
         val newList = NotesRepository.getAllNotes()
-        adapter?.setList(newList)
+        adapter.setList(newList)
     }
 
 
@@ -112,17 +92,9 @@ class NotesListFragment : Fragment() {
     }
 
     companion object {
-
-        // TODO: Customize parameter argument names
-        private val ARG_COLUMN_COUNT = "column-count"
-
-
         // TODO: Customize parameter initialization
         fun newInstance(columnCount: Int): NotesListFragment {
             val fragment = NotesListFragment()
-            val args = Bundle()
-            args.putInt(ARG_COLUMN_COUNT, columnCount)
-            fragment.arguments = args
             return fragment
         }
     }

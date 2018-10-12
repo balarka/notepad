@@ -9,21 +9,20 @@ import bvelidi.notepad.debug.DatabaseHelper
  * Created by bvelidi on 3/2/18.
  */
 
-class NotepadApp: Application() {
+class NotepadApp : Application() {
     companion object {
-        var database: AppDatabase? = null
+        lateinit var database: AppDatabase
+            private set
     }
 
     override fun onCreate() {
         super.onCreate()
-        if(NotepadApp.database == null) {
-            NotepadApp.database = Room.databaseBuilder(this, AppDatabase::class.java, "notes-db")
-                    .allowMainThreadQueries().build()
+        database = Room.databaseBuilder(this, AppDatabase::class.java, "notes-db")
+                .allowMainThreadQueries().build()
 
-            // Initialize DB with some data for Debug builds.
-            if(BuildConfig.DEBUG) {
-                DatabaseHelper.initDB()
-            }
+        // Initialize DB with some data for Debug builds.
+        if (BuildConfig.DEBUG) {
+            DatabaseHelper.initDB()
         }
     }
 }
