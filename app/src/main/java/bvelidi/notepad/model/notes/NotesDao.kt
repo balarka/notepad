@@ -1,6 +1,6 @@
 package bvelidi.notepad.model.notes
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import bvelidi.notepad.db.NotesEntity
 
 /**

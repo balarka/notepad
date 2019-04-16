@@ -1,6 +1,6 @@
 package bvelidi.notepad
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionLis
  * specified [OnListFragmentInteractionListener].
  *
  */
-class NotePadItemRecyclerViewAdapter(private var mValues: List<Notes>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<NotePadItemRecyclerViewAdapter.ViewHolder>() {
+class NotePadItemRecyclerViewAdapter(private var mValues: List<Notes>, private val mListener: OnListFragmentInteractionListener?) : androidx.recyclerview.widget.RecyclerView.Adapter<NotePadItemRecyclerViewAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,7 +42,7 @@ class NotePadItemRecyclerViewAdapter(private var mValues: List<Notes>, private v
     }
 
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(val mView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(mView) {
         val mIdView: TextView
         val mContentView: TextView
         var mItem: Notes? = null

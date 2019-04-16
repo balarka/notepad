@@ -2,12 +2,12 @@ package bvelidi.notepad.views.home
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.DividerItemDecoration.HORIZONTAL
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionLis
  * interface.
  */
 
-class NotesListFragment : Fragment() {
+class NotesListFragment : androidx.fragment.app.Fragment() {
     private var mListener: OnListFragmentInteractionListener? = null
     private lateinit var adapter: NotePadItemRecyclerViewAdapter
 
@@ -41,7 +41,7 @@ class NotesListFragment : Fragment() {
         }
 
         adapter = NotePadItemRecyclerViewAdapter(allNotes, mListener)
-        (view as RecyclerView).adapter = adapter
+        (view as androidx.recyclerview.widget.RecyclerView).adapter = adapter
         view.setHasFixedSize(true)
         return view
     }
@@ -56,13 +56,14 @@ class NotesListFragment : Fragment() {
         adapter.setList(newList)
     }
 
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+    override fun onAttach(context: Context) {
+        context.let {
+            super.onAttach(it)
+            if (it is OnListFragmentInteractionListener) {
+                mListener = it
+            } else {
+                throw RuntimeException("$it must implement OnListFragmentInteractionListener")
+            }
         }
     }
 

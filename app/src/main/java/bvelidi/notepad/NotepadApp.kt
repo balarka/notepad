@@ -1,7 +1,7 @@
 package bvelidi.notepad
 
 import android.app.Application
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import bvelidi.notepad.db.AppDatabase
 import bvelidi.notepad.debug.DatabaseHelper
 
@@ -21,7 +21,7 @@ class NotepadApp : Application() {
                 .allowMainThreadQueries().build()
 
         // Initialize DB with some data for Debug builds.
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             DatabaseHelper.initDB()
         }
     }
