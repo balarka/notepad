@@ -2,12 +2,6 @@ package bvelidi.notepad.views.home
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.HORIZONTAL
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +11,7 @@ import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
 import bvelidi.notepad.model.notes.NotesRepository
 import bvelidi.notepad.views.home.NotesListFragment.OnListFragmentInteractionListener
+import kotlinx.android.synthetic.main.fragment_notepaditem_list.*
 
 /**
  * A fragment representing a list of Items.
@@ -31,7 +26,16 @@ class NotesListFragment : androidx.fragment.app.Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_notepaditem_list, container, false)
+        return inflater.inflate(R.layout.fragment_notepaditem_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initList()
+    }
+
+    private fun initList() {
         val allNotes = arrayListOf<Notes>()
 
         NotepadApp.database.notesDao().getAll().forEach { ne ->
@@ -41,9 +45,8 @@ class NotesListFragment : androidx.fragment.app.Fragment() {
         }
 
         adapter = NotePadItemRecyclerViewAdapter(allNotes, mListener)
-        (view as androidx.recyclerview.widget.RecyclerView).adapter = adapter
-        view.setHasFixedSize(true)
-        return view
+        list.adapter = adapter
+        list.setHasFixedSize(true)
     }
 
     fun refreshView() {
@@ -95,8 +98,7 @@ class NotesListFragment : androidx.fragment.app.Fragment() {
     companion object {
         // TODO: Customize parameter initialization
         fun newInstance(columnCount: Int): NotesListFragment {
-            val fragment = NotesListFragment()
-            return fragment
+            return NotesListFragment()
         }
     }
 }
