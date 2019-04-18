@@ -42,7 +42,11 @@ dependencies {
     // Room
     implementation 'androidx.room:room-runtime:2.1.0-alpha06'
     implementation 'androidx.room:room-rxjava2:2.1.0-alpha06'
-    implementation 'androidx.room:room-compiler:2.1.0-alpha06'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha06'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha06'
     kapt 'androidx.room:room-compiler:2.1.0-alpha06'
+
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
 }
