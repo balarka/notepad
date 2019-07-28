@@ -7,7 +7,7 @@ import java.util.*
 object DatabaseHelper {
 
     fun initDB() {
-        for (i in 1..50) {
+        for (i in 1..5) {
             val dateNow = Date().time.toString()
             val n = NotesEntity(i.toString(), i.toString(), dateNow, dateNow)
             NotepadApp.database.notesDao().insert(n)

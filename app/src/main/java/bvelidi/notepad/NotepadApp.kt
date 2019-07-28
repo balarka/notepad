@@ -21,7 +21,7 @@ class NotepadApp : Application() {
                 .allowMainThreadQueries().build()
 
         // Initialize DB with some data for Debug builds.
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             DatabaseHelper.initDB()
         }
     }

@@ -2,19 +2,17 @@ package bvelidi.notepad.views.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import bvelidi.notepad.NotepadApp
+import androidx.appcompat.app.AppCompatActivity
 import bvelidi.notepad.R
 import bvelidi.notepad.model.Notes
-import bvelidi.notepad.model.notes.NotesRepository
 import bvelidi.notepad.views.notes.NotesDetailActivity
 import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
 
-class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentInteractionListener {
+class HomeActivity : AppCompatActivity(),
+        NotesListFragment.OnListFragmentInteractionListener {
 
     private val kResultCodeSaveNotes = 1
     private val zeroState = false
@@ -40,7 +38,7 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         }
     }
 
-    fun initView() {
+    private fun initView() {
         if (zeroState) {
             findViewById<View>(R.id.listFragment).visibility = View.GONE
         } else {
@@ -60,6 +58,7 @@ class HomeActivity : AppCompatActivity(), NotesListFragment.OnListFragmentIntera
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_deleteAllNotes -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
